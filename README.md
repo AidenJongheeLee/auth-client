@@ -3,8 +3,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 This porject client side for [Auth-API](https://github.com/AidenJongheeLee/auth-api-lrv).
 
 ## Getting Start
-### `git clone https://github.com/AidenJongheeLee/auth-client.git
-     yarn && yarn dev 
+`git clone https://github.com/AidenJongheeLee/auth-client.git
+ yarn && yarn dev 
 `
 
 
