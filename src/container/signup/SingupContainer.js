@@ -41,8 +41,13 @@ const SingupContainer = React.memo(({ classes, history }) => {
       ...user,
       Email: [{ Type: 'Primary', Value: user.Email }],
     };
-    await axios.post(`${config.API}/email/signup`, data);
-    history.push('/login');
+    try {
+      await axios.post(`${config.API}/email/signup`, data);
+
+      history.push('/login');
+    } catch (err) {
+      setError({ ...error, system: err.response.data.Description });
+    }
   };
 
   return (
@@ -61,7 +66,7 @@ const SingupContainer = React.memo(({ classes, history }) => {
             setError={setError}
           />
         ))}
-
+        <Typography color="secondary">{error.system}</Typography>
         <div className={classes.buttonContainer}>
           <Button variant="outlined" onClick={handleGoBack}>
             Cancel

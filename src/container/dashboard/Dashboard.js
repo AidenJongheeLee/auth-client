@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Cookie from 'js-cookie';
 import { withRouter } from 'react-router';
+import isEmpty from 'lodash/isEmpty';
 
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
@@ -24,7 +25,7 @@ const Dashboard = React.memo(({ classes, history }) => {
     <UserContext.Consumer>
       {({ user, setUser }) => {
         const name = `${user.FirstName} ${user.LastName}`;
-        const email = user.Email ? user.Email[0].Value : undefined;
+        const email = !isEmpty(user.Email) ? user.Email[0].Value : undefined;
         return (
           <Paper className={classes.paper}>
             {!openEdit ? (
