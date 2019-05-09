@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { SnackbarContext } from '../App';
 
 const MainContainer = ({ classes, children }) => {
-  const handleCloseSnackbar = setSnackbar => () => {
+  const { snackbar, setSnackbar } = useContext(SnackbarContext);
+
+  const handleCloseSnackbar = () => {
     setSnackbar({ open: false, message: '' });
   };
 
@@ -17,16 +19,13 @@ const MainContainer = ({ classes, children }) => {
       <Grid container className={classes.grid}>
         {children}
       </Grid>
-      <SnackbarContext.Consumer>
-        {({ snackbar, setSnackbar }) => (
-          <Snackbar
-            open={snackbar.open}
-            message={snackbar.message}
-            autoHideDuration={3000}
-            onClose={handleCloseSnackbar(setSnackbar)}
-          />
-        )}
-      </SnackbarContext.Consumer>
+
+      <Snackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      />
     </>
   );
 };

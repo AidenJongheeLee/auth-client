@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Cookie from 'js-cookie';
 import { withRouter } from 'react-router';
@@ -12,6 +12,8 @@ import ProfileContainer from './ProfileContainer';
 import EditContainer from './EditContainer';
 
 const Dashboard = React.memo(({ classes, history }) => {
+  const { user, setUser } = useContext(UserContext);
+
   const [openEdit, setOpen] = useState(false);
   const handleLogOut = () => {
     Cookie.set('auth_token', '');
@@ -21,35 +23,31 @@ const Dashboard = React.memo(({ classes, history }) => {
   const toggleButton = useCallback(() => {
     setOpen(!openEdit);
   }, [openEdit]);
+
+  const name = `${user.FirstName} ${user.LastName}`;
+  const email = !isEmpty(user.Email) ? user.Email[0].Value : undefined;
+
   return (
-    <UserContext.Consumer>
-      {({ user, setUser }) => {
-        const name = `${user.FirstName} ${user.LastName}`;
-        const email = !isEmpty(user.Email) ? user.Email[0].Value : undefined;
-        return (
-          <Paper className={classes.paper}>
-            {!openEdit ? (
-              <ProfileContainer
-                name={name}
-                email={email}
-                created={user.CreatedDate}
-                logout={handleLogOut}
-                onClick={toggleButton}
-              />
-            ) : (
-              <EditContainer
-                uid={user.Uid}
-                firstName={user.FirstName}
-                lastName={user.LastName}
-                email={email}
-                cancel={toggleButton}
-                updateCurrent={setUser}
-              />
-            )}
-          </Paper>
-        );
-      }}
-    </UserContext.Consumer>
+    <Paper className={classes.paper}>
+      {!openEdit ? (
+        <ProfileContainer
+          name={name}
+          email={email}
+          created={user.CreatedDate}
+          logout={handleLogOut}
+          onClick={toggleButton}
+        />
+      ) : (
+        <EditContainer
+          uid={user.Uid}
+          firstName={user.FirstName}
+          lastName={user.LastName}
+          email={email}
+          cancel={toggleButton}
+          updateCurrent={setUser}
+        />
+      )}
+    </Paper>
   );
 });
 

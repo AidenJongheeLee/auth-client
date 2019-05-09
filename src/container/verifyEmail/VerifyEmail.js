@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 
 import config from '../../config';
@@ -6,6 +6,7 @@ import { SnackbarContext } from '../../App';
 import VerifyMessage from './VerifyMessage';
 
 const VerifyEmail = React.memo(() => {
+  const { setSnackbar } = useContext(SnackbarContext);
   const [message, setMessage] = useState('');
   const verifyEmail = async (token) => {
     if (!token) {
@@ -26,11 +27,7 @@ const VerifyEmail = React.memo(() => {
     verifyEmail(token);
   }, []);
 
-  return (
-    <SnackbarContext.Consumer>
-      {({ setSnackbar }) => <VerifyMessage setSnackbar={setSnackbar} message={message} />}
-    </SnackbarContext.Consumer>
-  );
+  return <VerifyMessage setSnackbar={setSnackbar} message={message} />;
 });
 
 VerifyEmail.propTypes = {};

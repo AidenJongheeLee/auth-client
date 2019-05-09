@@ -6,25 +6,23 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-const EmailPopover = React.memo(
-  ({
-    anchorEl, onClose, classes, email, onChange, onClick, setSnackbar,
-  }) => (
-    <Popover
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={onClose}
-      classes={{
-        paper: classes.popover,
-      }}
-    >
-      <TextField label="Email" value={email} onChange={onChange} variant="outlined" />
-      <Button color="primary" onClick={onClick(setSnackbar)}>
-          Send
-      </Button>
-    </Popover>
-  ),
-);
+const EmailPopover = React.memo(({
+  anchorEl, onClose, classes, email, onChange, onClick,
+}) => (
+  <Popover
+    anchorEl={anchorEl}
+    open={Boolean(anchorEl)}
+    onClose={onClose}
+    classes={{
+      paper: classes.popover,
+    }}
+  >
+    <TextField label="Email" value={email} onChange={onChange} variant="outlined" />
+    <Button color="primary" onClick={onClick}>
+      Send
+    </Button>
+  </Popover>
+));
 
 EmailPopover.propTypes = {
   anchorEl: PropTypes.shape({}),
@@ -33,7 +31,6 @@ EmailPopover.propTypes = {
   email: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
-  setSnackbar: PropTypes.func.isRequired,
 };
 
 EmailPopover.defaultProps = {
